@@ -45,7 +45,7 @@ if __name__ == '__main__':
         print('printable:')
         for i, r in enumerate(result):
             if is_printable(r):
-                print('%02x : %s' % (i, str(r)[2:-1]))
+                print('%02x : %s' % (i, r.decode()))
 
     elif len(sys.argv) == 2:
         input = bytes.fromhex((sys.argv[1]))
@@ -53,6 +53,12 @@ if __name__ == '__main__':
 
         for i, r in enumerate(result):
             print('%02x : %s' % (i, str(r)[2:-1]))
+
+        print()
+        print('printable:')
+        for i, r in enumerate(result):
+            if is_printable(r):
+                print('%02x : %s' % (i, r.decode()))
 
     elif len(sys.argv) == 3:
         byte = int(sys.argv[1], 16) & 0xff
