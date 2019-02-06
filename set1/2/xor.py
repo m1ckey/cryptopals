@@ -3,7 +3,7 @@ import sys
 inputs = ['1c0111001f010100061a024b53535009181c', '686974207468652062756c6c277320657965']
 
 if len(sys.argv) >= 3:
-     inputs = sys.argv[1:]
+    inputs = sys.argv[1:]
 
 longest = 0
 for i, input in enumerate(inputs):
