@@ -31,17 +31,35 @@ def is_printable(r):
     except Exception as e:
         return False
 
-
 if __name__ == '__main__':
-    strings=open('set.txt', 'r').read()
-    strings=filter(None, strings.split('\n')) # delete empty strings
-    for string in strings: 
-        result = brute(string)
-        #for i, r in enumerate(result):
-            #print('%02x : %s' % (i, str(r)[2:-1]))
+
+    if len(sys.argv) == 1:
+        input = '1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736'
+        result = brute(input)
+
+        for i, r in enumerate(result):
+            print('%02x : %s' % (i, str(r)[2:-1]))
 
         print()
         print('printable:')
         for i, r in enumerate(result):
             if is_printable(r):
                 print('%02x : %s' % (i, r.decode()))
+
+    elif len(sys.argv) == 2:
+        input = bytes.fromhex((sys.argv[1]))
+        result = brute(input)
+
+        for i, r in enumerate(result):
+            print('%02x : %s' % (i, str(r)[2:-1]))
+
+        print()
+        print('printable:')
+        for i, r in enumerate(result):
+            if is_printable(r):
+                print('%02x : %s' % (i, r.decode()))
+
+    elif len(sys.argv) == 3:
+        byte = int(sys.argv[1], 16) & 0xff
+        input = sys.argv[2]
+        print(xor(byte, input))
