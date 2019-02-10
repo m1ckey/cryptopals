@@ -31,7 +31,7 @@ def brute(string):
     return result
 
 
-def is_printable(b):
+def is_printable(r):
     '''
     decide wheter a bytestring is printable or not
     arg0: bytes, unknown if they are printable
@@ -42,5 +42,20 @@ def is_printable(b):
             return True
         else:
             return False
-    except BaseException:
+    except Exception as e:
+        return False
+
+
+def brute_printable(string):
+    '''
+    xor string with every possible extended ascii character
+    arg0: string string
+    return: array of all possible strings(combine with is_printable if needed)
+    '''
+    result = []
+    for i in range(256):
+        tmp=xor(i, string)
+        if is_printable(tmp):
+            result.append(tmp)
+    if result != []: 
         return False
