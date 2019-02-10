@@ -1,6 +1,6 @@
-import library
 import sys
 sys.path.insert(0, '../')
+import library
 
 if __name__ == '__main__':
     strings = open('set.txt', 'r').read()
