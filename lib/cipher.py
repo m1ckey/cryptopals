@@ -20,22 +20,22 @@ def brute_single_byte_xor_chiper(b):
     return candidates
 
 
-def solve_single_byte_xor_cipher(b):
+def solve_single_byte_xor_cipher(ciphertext):
     """
     solve single byte xor cipher opinionated and return the best solution
-    :param b: bytes
+    :param ciphertext: bytes
     :return: best solution, or None
     """
 
-    candidates = brute_single_byte_xor_chiper(b)
+    candidates = brute_single_byte_xor_chiper(ciphertext)
     results = order_by_test_score(candidates, chi_squared_test, ascending=True)
     return results[0] if len(results) > 0 else None
 
 
-def solve_repeating_xor_cipher(b, keysize_min=1, keysize_max=64, limit=1):
+def solve_repeating_xor_cipher(ciphertext, keysize_min=1, keysize_max=64, limit=1):
     """
     solve repeating byte xor cipher opinionated and return the best solutions
-    :param b: bytes
+    :param ciphertext: bytes
     :param keysize_min: min keysize (inclusive)
     :param keysize_max: max keysize (inclusive)
     :param limit: max solutions (completeness-time trade-off)
@@ -45,20 +45,20 @@ def solve_repeating_xor_cipher(b, keysize_min=1, keysize_max=64, limit=1):
     """
 
     def get_block(index, length):
-        if index * length >= len(b):
+        if index * length >= len(ciphertext):
             raise Exception('index out of bounds')
-        return b[index * length:(index + 1) * length]
+        return ciphertext[index * length:(index + 1) * length]
 
     def get_blocks(length):
         rows = []
-        for i in range(0, len(b), length):
-            rows.append(b[i:i + length])
+        for i in range(0, len(ciphertext), length):
+            rows.append(ciphertext[i:i + length])
         return rows
 
     def get_slice(index, length):
-        if index >= length or length >= len(b):
+        if index >= length or length >= len(ciphertext):
             raise Exception('index out of bounds')
-        return b[index::length]
+        return ciphertext[index::length]
 
     def get_slices(length):
         cols = []
@@ -72,8 +72,8 @@ def solve_repeating_xor_cipher(b, keysize_min=1, keysize_max=64, limit=1):
 
         blocks = get_blocks(keysize)[:4]
         combos = combinations(blocks, 2)
-        for (e1, e2) in combos:
-            distance += hamming_distance_byte(e1, e2)
+        for (a, b) in combos:
+            distance += hamming_distance_byte(a, b)
 
         keysize_probability[keysize] = distance / keysize
 
