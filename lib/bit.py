@@ -18,8 +18,8 @@ def xor(b0, b1):
 def xor_ljust(b0, b1):
     """
     xor, if one is shorter it is adjusted to the left and filled with null bytes
-    :param b0:
-    :param b1:
+    :param b0: bytes
+    :param b1: bytes
     :return: xor'ed bytes
     """
 
@@ -36,8 +36,8 @@ def xor_ljust(b0, b1):
 def xor_rjust(b0, b1):
     """
     xor, if one is shorter it is adjusted to the right and filled with null bytes
-    :param b0:
-    :param b1:
+    :param b0: bytes
+    :param b1: bytes
     :return: xor'ed bytes
     """
 
@@ -51,7 +51,7 @@ def xor_rjust(b0, b1):
     return xor(b0, b1)
 
 
-def xor_brute_byte(b):
+def brute_byte_xor(b):
     """
     xor bytes with every byte (0x00 - 0xff)
     :param b: bytes
@@ -62,3 +62,25 @@ def xor_brute_byte(b):
     for i in range(256):
         result.append(xor(b, bytes([i])))
     return result
+
+
+def hamming_distance_byte(b0, b1):
+    """
+    calculate the binary hamming distance
+    eg (0x00, 0xF0) -> 4
+    :param b0: bytes
+    :param b1: bytes
+
+    :return: integer hamming distance
+    """
+
+    if len(b0) != len(b1):
+        raise Exception('hamming distance for unequal length is undefined')
+
+    d = 0
+    for i in range(len(b0)):
+        for j in range(8):
+            if (b0[i] & (2 ** j)) != (b1[i] & (2 ** j)):
+                d += 1
+
+    return d

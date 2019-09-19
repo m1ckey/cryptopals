@@ -1,22 +1,14 @@
-from lib.bit import *
-from lib.enc import *
+from lib.cipher import *
 from lib.txt import *
 
 lines = open('set.txt').readlines()
 
 candidates = []
 for l in lines:
-    b = hex2bytes(l)
-    for candidate in xor_brute_byte(b):
-        if is_printable(candidate):
-            candidates.append(candidate.decode())
+    b = hex_to_bytes(l)
+    candidates += brute_single_byte_xor_chiper(b)
 
-chi_score = {}
-for c in candidates:
-    chi_score[c] = chi_squared_test(c.lower())
+results = order_by_test_score(candidates, simple_char_score_test)
 
-results = sorted(chi_score.keys(), key=chi_score.get)
-
-print(results[1])
-
-assert results[1] == 'Now that the party is jumping\n'
+print(results[0])
+assert results[0] == 'Now that the party is jumping\n'

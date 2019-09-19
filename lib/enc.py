@@ -33,7 +33,7 @@ def is_decodable(b):
         return False
 
 
-def hex2bytes(s):
+def hex_to_bytes(s):
     """
     tries it's best to convert a hex string to bytes
     :param s: hex string
@@ -49,10 +49,9 @@ def hex2bytes(s):
     return bytes.fromhex(s)
 
 
-def bytes2hex(b):
+def bytes_to_hex(b):
     """
     converts bytes to hex string
-    for completeness
     :param b: bytes
     :return: hex string
     """
@@ -60,7 +59,7 @@ def bytes2hex(b):
     return b.hex()
 
 
-def bytes2base64(b):
+def bytes_to_base64(b):
     """
     convert bytes to base64 string
     :param b: bytes
@@ -68,3 +67,13 @@ def bytes2base64(b):
     """
 
     return base64.b64encode(b).decode()
+
+
+def base64_to_bytes(s):
+    """
+    convert base64 string to bytes
+    :param s: base64 string
+    :return: bytes
+    """
+
+    return base64.b64decode(s)
